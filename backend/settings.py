@@ -11,17 +11,22 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import environ
 from datetime import timedelta
 from pathlib import Path
 
+env= environ.Env()
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sc%oco$+(3$z$at=z4j)#l-+ym)+_b11389mdt2^12m$bf63%@'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -134,8 +139,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'VegiContainer',
         'USER': 'postgres',
-        'PASSWORD':'Seiya0311',
-        'HOST': 'vegicontainer.c4dlqav3b4ua.us-east-2.rds.amazonaws.com',
+        'PASSWORD':env('VEGICON_DB_PASS'),
+        'HOST': env('VEGICON_DB_HOST'),
         'PORT': '5432'
     }
  }
@@ -197,8 +202,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = os.environ.get('AKIA5SG7P4SFSJ4S2WVA')
-AWS_SECRET_ACCESS_KEY = os.environ.get('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')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID2')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY2')
 
 AWS_STORAGE_BUCKET_NAME = 'vegicontainer-bucket'
 
